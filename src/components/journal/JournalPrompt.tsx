@@ -186,92 +186,94 @@ const JournalPrompt = () => {
           </CardHeader>
           
           <CardContent className="flex-grow overflow-y-auto">
-            <TabsContent value="new" className="h-full flex flex-col mt-0">
-              <div>
-                <div className="flex space-x-2 mb-4">
-                  <Button
-                    variant={promptCategory === "gratitude" ? "default" : "outline"}
-                    className={promptCategory === "gratitude" ? "bg-wellness-purple text-white" : ""}
-                    onClick={() => {
-                      setPromptCategory("gratitude");
-                      setCurrentPrompt(getRandomPrompt("gratitude"));
-                    }}
-                  >
-                    Gratitude
-                  </Button>
-                  <Button
-                    variant={promptCategory === "reflection" ? "default" : "outline"}
-                    className={promptCategory === "reflection" ? "bg-wellness-purple text-white" : ""}
-                    onClick={() => {
-                      setPromptCategory("reflection");
-                      setCurrentPrompt(getRandomPrompt("reflection"));
-                    }}
-                  >
-                    Reflection
-                  </Button>
-                  <Button
-                    variant={promptCategory === "growth" ? "default" : "outline"}
-                    className={promptCategory === "growth" ? "bg-wellness-purple text-white" : ""}
-                    onClick={() => {
-                      setPromptCategory("growth");
-                      setCurrentPrompt(getRandomPrompt("growth"));
-                    }}
-                  >
-                    Growth
-                  </Button>
-                </div>
-                
-                <div className="mb-4 flex justify-between items-center">
-                  <div className="text-sm font-medium bg-wellness-lavender/20 p-3 rounded-lg flex-grow">
-                    {currentPrompt}
-                  </div>
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="ml-2 flex-shrink-0" 
-                    onClick={handleNewPrompt}
-                  >
-                    <RefreshCw className="h-4 w-4" />
-                  </Button>
-                </div>
-                
-                <textarea
-                  className="w-full p-4 rounded-lg border border-wellness-lavender/50 focus:outline-none focus:ring-2 focus:ring-primary/30 min-h-[250px]"
-                  placeholder="Begin writing your thoughts here..."
-                  value={journalContent}
-                  onChange={(e) => setJournalContent(e.target.value)}
-                />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="view" className="h-full flex flex-col mt-0">
-              {selectedEntry && (
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <h3 className="font-medium text-primary">
-                      {formatDate(selectedEntry.date)}
-                    </h3>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${
-                      selectedEntry.category === "gratitude" 
-                        ? "bg-wellness-mint text-green-800" 
-                        : selectedEntry.category === "reflection" 
-                          ? "bg-wellness-sky text-blue-800" 
-                          : "bg-wellness-peach text-orange-800"
-                    }`}>
-                      {selectedEntry.category}
-                    </span>
+            <Tabs value={activeTab}>
+              <TabsContent value="new" className="h-full flex flex-col mt-0">
+                <div>
+                  <div className="flex space-x-2 mb-4">
+                    <Button
+                      variant={promptCategory === "gratitude" ? "default" : "outline"}
+                      className={promptCategory === "gratitude" ? "bg-wellness-purple text-white" : ""}
+                      onClick={() => {
+                        setPromptCategory("gratitude");
+                        setCurrentPrompt(getRandomPrompt("gratitude"));
+                      }}
+                    >
+                      Gratitude
+                    </Button>
+                    <Button
+                      variant={promptCategory === "reflection" ? "default" : "outline"}
+                      className={promptCategory === "reflection" ? "bg-wellness-purple text-white" : ""}
+                      onClick={() => {
+                        setPromptCategory("reflection");
+                        setCurrentPrompt(getRandomPrompt("reflection"));
+                      }}
+                    >
+                      Reflection
+                    </Button>
+                    <Button
+                      variant={promptCategory === "growth" ? "default" : "outline"}
+                      className={promptCategory === "growth" ? "bg-wellness-purple text-white" : ""}
+                      onClick={() => {
+                        setPromptCategory("growth");
+                        setCurrentPrompt(getRandomPrompt("growth"));
+                      }}
+                    >
+                      Growth
+                    </Button>
                   </div>
                   
-                  <div className="text-sm font-medium bg-wellness-lavender/20 p-3 rounded-lg">
-                    {selectedEntry.prompt}
+                  <div className="mb-4 flex justify-between items-center">
+                    <div className="text-sm font-medium bg-wellness-lavender/20 p-3 rounded-lg flex-grow">
+                      {currentPrompt}
+                    </div>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="ml-2 flex-shrink-0" 
+                      onClick={handleNewPrompt}
+                    >
+                      <RefreshCw className="h-4 w-4" />
+                    </Button>
                   </div>
                   
-                  <div className="p-4 rounded-lg border border-wellness-lavender/50 min-h-[250px] whitespace-pre-line">
-                    {selectedEntry.content}
-                  </div>
+                  <textarea
+                    className="w-full p-4 rounded-lg border border-wellness-lavender/50 focus:outline-none focus:ring-2 focus:ring-primary/30 min-h-[250px]"
+                    placeholder="Begin writing your thoughts here..."
+                    value={journalContent}
+                    onChange={(e) => setJournalContent(e.target.value)}
+                  />
                 </div>
-              )}
-            </TabsContent>
+              </TabsContent>
+              
+              <TabsContent value="view" className="h-full flex flex-col mt-0">
+                {selectedEntry && (
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-medium text-primary">
+                        {formatDate(selectedEntry.date)}
+                      </h3>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${
+                        selectedEntry.category === "gratitude" 
+                          ? "bg-wellness-mint text-green-800" 
+                          : selectedEntry.category === "reflection" 
+                            ? "bg-wellness-sky text-blue-800" 
+                            : "bg-wellness-peach text-orange-800"
+                      }`}>
+                        {selectedEntry.category}
+                      </span>
+                    </div>
+                    
+                    <div className="text-sm font-medium bg-wellness-lavender/20 p-3 rounded-lg">
+                      {selectedEntry.prompt}
+                    </div>
+                    
+                    <div className="p-4 rounded-lg border border-wellness-lavender/50 min-h-[250px] whitespace-pre-line">
+                      {selectedEntry.content}
+                    </div>
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
           </CardContent>
           
           <CardFooter className="pt-4">
